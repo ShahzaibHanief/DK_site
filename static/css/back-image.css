@@ -1,0 +1,54 @@
+{% load static %}
+
+/* Simple Background Images - No Overlay */
+.hero-section {
+    background-image: url('../images/image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Color overlay on logo image */
+/* .logo-img {
+    height: 50px;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(68%) sepia(71%) saturate(1234%) hue-rotate(330deg) brightness(100%) contrast(96%);
+} */
+
+/* .logo-img {
+    height: 50px;
+    width: auto;
+    filter: brightness(0) invert(1);
+} */
+
+/* RECOMMENDED #3: Deep Teal (Matches background) */
+/* .logo-img {
+    height: 50px;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(29%) sepia(68%) saturate(1015%) hue-rotate(157deg) brightness(94%) contrast(94%);
+} */
+
+/* .services-preview {
+    background-image: url('image.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.training-preview {
+    background-image: url('image.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.testimonials {
+    background-image: url('image.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}  */
+
+
+

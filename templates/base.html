@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% block title %}
+    <title>Digital King Skills | Software House & IT Training</title>
+    {% endblock %}
+    
+    <!-- Global CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/back-image.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <div class="logo-wrapper">
+                    <img src="{% static 'images/logo4.png' %}" alt="Digital King Logo" class="logo-img" style="border-radius: 12px;">
+                    <span class="brand-text">DIGITAL <span class="brand-highlight">KING <span class="brand-text">SKILLS </span></span></span>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" href="{% url 'services' %}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'training' %}active{% endif %}" href="{% url 'training' %}">Trainings</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" href="{% url 'projects' %}">Our Projects</a></li>
+                </ul>
+                <a href="{% url 'contact' %}" class="btn-glow ms-lg-3">Get Quote <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    {% block content %}{% endblock %}
+
+    <!-- ==================== FOOTER ==================== -->
+    {% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-logo">
+                         <img src="{% static 'images/logo4.png' %}" alt="Logo" style="border-radius: 10px; height: 45px;">
+                        <span>DIGITAL<span>KING</span></span>
+                    </div>
+                    <p>Rajanpur's premier software house & IT training institute.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'services' %}">Services</a></li>
+                        <li><a href="{% url 'training' %}">Trainings</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4>Work Hours</h4>
+                    <ul class="hours-list">
+                       {% for wh in work_hours %}
+                        <li><span>{{wh.day}}</span>
+                             {% if wh.is_closed %}
+                             closed
+                             {% else %}
+                             {{wh.formatted_hours}}
+                             {% endif %}
+                            </li>
+                         {% empty %}
+                      <li><span>Mon-Fri:</span> 9:00 AM - 8:00 PM</li>
+                       <li><span>Saturday:</span> 10:00 AM - 4:00 PM</li>
+                       <li><span>Sunday:</span> Closed</li>
+                 {% endfor %}
+                        
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Newsletter</h4>
+                    <p>Get latest tech updates</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Digital King Software House Rajanpur. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- ==================== GLOBAL SCRIPTS ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

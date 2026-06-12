@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Blog | Digital King</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1 data-aos="fade-up">Our <span class="gradient-text">Blog</span></h1>
+        <p data-aos="fade-up" data-aos-delay="100">Insights, trends, and tech updates from Digital King</p>
+    </div>
+</section>
+
+<!-- Blog Grid - DYNAMIC -->
+<section class="blog-section section-padding">
+    <div class="container">
+        <div class="row g-4">
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:0 }}00">
+                <div class="blog-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    {% else %}
+                        <img src="https://placehold.co/600x400/1e293b/6366f1?text={{ post.title|truncatewords:2|urlencode }}" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="blog-content">
+                        <span class="blog-date">
+                            <i class="far fa-calendar"></i> {{ post.formatted_date }}
+                            <span class="ms-2"><i class="far fa-clock"></i> {{ post.read_time }} min read</span>
+                        </span>
+                        <span class="blog-category">{{ post.get_category_display }}</span>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt|truncatewords:20 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static posts -->
+            <div class="col-12 text-center">
+                <p>No blog posts found. Add posts from admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

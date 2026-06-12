@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Our Projects | Digital King - Software House Rajanpur</title>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .project-filter {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 50px;
+    }
+    .filter-btn {
+        background: transparent;
+        border: 1px solid var(--gold-primary);
+        color: var(--text-white);
+        padding: 8px 24px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background: var(--gold-primary);
+        color: var(--text-dark-navy);
+        transform: translateY(-2px);
+    }
+    .project-card {
+        background: var(--teal-glass);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: var(--transition);
+        height: 100%;
+    }
+    .project-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--gold-primary);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(245,166,35,0.2);
+    }
+    .project-img {
+        position: relative;
+        overflow: hidden;
+        height: 220px;
+    }
+    .project-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-img img {
+        transform: scale(1.1);
+    }
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+    }
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+    .project-overlay a {
+        width: 45px;
+        height: 45px;
+        background: var(--gold-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-dark-navy);
+        font-size: 1.2rem;
+        transition: var(--transition);
+        margin: 0 5px;
+    }
+    .project-overlay a:hover {
+        transform: scale(1.1);
+        background: var(--gold-light);
+    }
+    .project-content {
+        padding: 20px;
+    }
+    .project-category {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(245,166,35,0.15);
+        border-radius: 50px;
+        font-size: 0.7rem;
+        color: var(--gold-primary);
+        margin-bottom: 12px;
+    }
+    .project-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--text-white);
+    }
+    .project-content p {
+        color: var(--text-light-gray);
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    .project-tech span {
+        background: rgba(255,255,255,0.1);
+        padding: 4px 10px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        color: var(--text-light-gray);
+    }
+    .project-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--glass-border);
+        padding-top: 15px;
+        margin-top: 5px;
+    }
+    .project-stats .stat {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.8rem;
+        color: var(--text-light-gray);
+    }
+    .project-stats .stat i {
+        color: var(--gold-primary);
+    }
+    .counter-box {
+        background: var(--teal-glass);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        transition: var(--transition);
+    }
+    .counter-box:hover {
+        border-color: var(--gold-primary);
+        transform: translateY(-5px);
+    }
+    .counter-box .number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--gold-primary);
+    }
+    .counter-box p {
+        color: var(--text-light-gray);
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1 data-aos="fade-up">Our <span class="gradient-text">Projects</span></h1>
+        <p data-aos="fade-up" data-aos-delay="100">Explore our successful deliveries and client success stories</p>
+    </div>
+</section>
+
+<!-- Stats Counter - DYNAMIC -->
+<section class="section-padding" style="padding-top: 0;">
+    <div class="container">
+        <div class="row g-4">
+            {% for stat in site_stats %}
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:0 }}00">
+                <div class="counter-box">
+                    <div class="number">
+                        <span class="project-counter" data-target="{{ stat.value|cut:'+'|cut:'%'|cut:'K'|cut:'M' }}">0</span>
+                        {{ stat.suffix|default:'' }}
+                    </div>
+                    <p>{{ stat.label }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static stats -->
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="counter-box">
+                    <div class="number"><span class="project-counter" data-target="150">0</span>+</div>
+                    <p>Projects Completed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="counter-box">
+                    <div class="number"><span class="project-counter" data-target="98">0</span>%</div>
+                    <p>Client Satisfaction</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="counter-box">
+                    <div class="number"><span class="project-counter" data-target="15">0</span>+</div>
+                    <p>Countries Served</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="counter-box">
+                    <div class="number"><span class="project-counter" data-target="500">0</span>+</div>
+                    <p>Happy Clients</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Project Filters -->
+<section class="section-padding" style="padding-top: 0;">
+    <div class="container">
+        <div class="project-filter" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            {% for category in categories %}
+                <button class="filter-btn" data-filter="{{ category.slug }}">{{ category.name }}</button>
+            {% empty %}
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+                <button class="filter-btn" data-filter="ai">AI & Automation</button>
+                <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+            {% endfor %}
+        </div>
+
+        <!-- Projects Grid - DYNAMIC -->
+        <div class="row g-4 projects-container" data-aos="fade-up">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 project-item" data-category="{{ project.category.slug }}">
+                <div class="project-card">
+                    <div class="project-img">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% else %}
+                            <img src="https://placehold.co/600x400/083C52/F5A623?text={{ project.title|urlencode }}" alt="{{ project.title }}">
+                        {% endif %}
+                        <div class="project-overlay">
+                            <a href="{{ project.get_absolute_url }}" title="View Details"><i class="fas fa-eye"></i></a>
+                            <a href="{% url 'contact' %}?project={{ project.title|urlencode }}" title="Start Similar Project"><i class="fas fa-rocket"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">{{ project.category.name }}</span>
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.short_description }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.tech_list %}
+                                <span>{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-star"></i> 
+                                {% with stat=project.stat_display %}
+                                    {{ stat.value }} {{ stat.label }}
+                                {% endwith %}
+                            </div>
+                            <div class="stat"><i class="fas fa-calendar"></i> {{ project.year }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static projects -->
+            <div class="col-12 text-center">
+                <p>No projects found. Add projects from admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-glass-card" data-aos="zoom-in">
+            <h2>Have a Project in Mind?</h2>
+            <p>Let's discuss your ideas and turn them into reality</p>
+            <a href="{% url 'contact' %}" class="btn-primary-glow btn-large">Start Your Project <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Project Counter Animation
+    const projectCounters = document.querySelectorAll('.project-counter');
+    let countersStarted = false;
+
+    function startProjectCounters() {
+        if (countersStarted) return;
+        projectCounters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            let current = 0;
+            const increment = target / 60;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCounter();
+        });
+        countersStarted = true;
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startProjectCounters();
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    if (document.querySelector('.counter-box')) {
+        counterObserver.observe(document.querySelector('.counter-box'));
+    }
+
+    // Project Filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filterValue = btn.getAttribute('data-filter');
+            
+            projectItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeInUp 0.5s ease';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}

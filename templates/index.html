@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Digital King Skills | Home - Software House & IT Training</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero-section" id="home">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                
+                <!-- Animated Brand Title -->
+                <div class="animated-brand-title">
+                    <h1>DIGITAL KING <span style="color: var(--gold-primary);">SKILLS</span></h1>
+                    <div class="typing-text">
+                        <span id="typed-skills-text"></span>
+                        <span class="cursor">|</span>
+                    </div>
+                </div>
+                
+                <!-- Contact Images -->
+                <div class="contact-images-section">
+                    <a href="https://wa.me/923001234567" class="contact-img-card" target="_blank">
+                        <img src="{% static 'images/whatsapp.png' %}" alt="WhatsApp" onerror="this.src='https://placehold.co/40x40/25D366/white?text=WA'">
+                    </a>
+                    <a href="tel:+923001234567" class="contact-img-card">
+                        <img src="{% static 'images/phone-call.png' %}" alt="Call" onerror="this.src='https://placehold.co/40x40/00A86B/white?text=Call'">
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="col-lg-4 offset-lg-1" data-aos="fade-left" data-aos-duration="1000">
+                <div class="login-card">
+                    <h3><i class="fas fa-lock"></i> Member Login</h3>
+                    <form id="loginForm">
+                        <input type="text" class="form-control" placeholder="Username / Email" required id="loginUsername">
+                        <input type="password" class="form-control" placeholder="Password" required id="loginPassword">
+                        <button type="submit" class="login-btn">Login <i class="fas fa-arrow-right"></i></button>
+                        <div class="forgot-password">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                    </form>
+                    <div id="loginStatus" class="mt-3 text-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== MOVING TEXT (DYNAMIC FROM DATABASE) ==================== -->
+<div class="moving-text-container">
+    <div class="moving-text">
+        {% for service in all_services %}
+            <i class="fas {{ service.icon }}"></i> {{ service.title|upper }} <span>✦</span>
+        {% empty %}
+            <i class="fas fa-globe"></i> WEB DEVELOPMENT <span>✦</span>
+            <i class="fas fa-mobile-alt"></i> MOBILE APPS <span>✦</span>
+            <i class="fas fa-brain"></i> AI SOLUTIONS <span>✦</span>
+            <i class="fas fa-cloud"></i> CLOUD SERVICES <span>✦</span>
+            <i class="fas fa-shield-alt"></i> CYBER SECURITY <span>✦</span>
+            <i class="fas fa-chart-line"></i> DIGITAL MARKETING <span>✦</span>
+            <i class="fas fa-code"></i> FULL STACK <span>✦</span>
+            <i class="fas fa-database"></i> DATA SCIENCE
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ==================== SERVICES PREVIEW (DYNAMIC) ==================== -->
+<section class="services-preview section-padding">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">What We Do</span>
+            <h2 class="section-title">Our <span>Core Services</span></h2>
+            <p class="section-subtitle">End-to-end digital solutions tailored for your business growth</p>
+        </div>
+        <div class="row g-4">
+            {% for service in home_services %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="service-card-glass">
+                    <div class="service-icon"><i class="fas {{ service.icon }}"></i></div>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description|truncatewords:20 }}</p>
+                    <a href="{% url 'services' %}" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card-glass">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Web & App Dev</h3>
+                    <p>React, Angular, Vue, Node.js, Laravel – full-stack web applications.</p>
+                    <a href="{% url 'services' %}" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card-glass">
+                    <div class="service-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>AWS, Azure, Docker, Kubernetes – scalable cloud infrastructure.</p>
+                    <a href="{% url 'services' %}" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card-glass">
+                    <div class="service-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI & Automation</h3>
+                    <p>Machine learning, chatbots, RPA – automate your business processes.</p>
+                    <a href="{% url 'services' %}" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'services' %}" class="btn-outline-glass">View All Services <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== TRAINING PREVIEW (DYNAMIC) ==================== -->
+<section class="training-preview section-padding bg-gradient-dark animated-bg">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">Training Programs</span>
+            <h2 class="section-title">Become an <span>Industry Expert</span></h2>
+            <p class="section-subtitle">Hands-on training with real-world projects & certification</p>
+        </div>
+        <div class="row g-4">
+            {% for course in home_courses %}
+            <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="{{ forloop.counter }}00">
+                <div class="course-card">
+                    <div class="course-badge">{{ course.duration }}</div>
+                    <i class="fas {{ course.icon }} course-icon"></i>
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.short_description|truncatewords:12 }}</p>
+                    <span class="course-level">{{ course.level }}</span>
+                    <div class="mt-3">
+                        <a href="{{ course.get_absolute_url }}" class="btn-primary-glow btn-sm">Explore <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="100">
+                <div class="course-card">
+                    <div class="course-badge">12 Weeks</div>
+                    <i class="fas fa-code course-icon"></i>
+                    <h3>Full Stack Dev</h3>
+                    <p>MERN + Python, 4 live projects</p>
+                    <span class="course-level">Advanced</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="200">
+                <div class="course-card">
+                    <div class="course-badge">10 Weeks</div>
+                    <i class="fas fa-chart-line course-icon"></i>
+                    <h3>Data Science</h3>
+                    <p>Python, Pandas, ML, Tableau</p>
+                    <span class="course-level">Intermediate</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="300">
+                <div class="course-card">
+                    <div class="course-badge">8 Weeks</div>
+                    <i class="fas fa-paint-brush course-icon"></i>
+                    <h3>UI/UX Design</h3>
+                    <p>Figma, Adobe XD, Prototyping</p>
+                    <span class="course-level">Beginner</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="400">
+                <div class="course-card">
+                    <div class="course-badge">10 Weeks</div>
+                    <i class="fas fa-mobile-alt course-icon"></i>
+                    <h3>Flutter Mobile</h3>
+                    <p>iOS + Android, Firebase</p>
+                    <span class="course-level">Intermediate</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'training' %}" class="btn-primary-glow">View All Courses <i class="fas fa-graduation-cap"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED PROJECTS (DYNAMIC) ==================== -->
+<section class="projects-preview section-padding">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">Portfolio</span>
+            <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+            <p class="section-subtitle">Some of our best work for clients worldwide</p>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="project-card">
+                    <div class="project-img">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% else %}
+                            <div class="project-placeholder" style="min-height: 220px;">
+                                <i class="fas fa-laptop-code" style="font-size: 3rem; color: var(--gold-primary);"></i>
+                                <span style="font-size: 1rem; color: var(--text-white);">{{ project.title|truncatechars:20 }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="project-overlay">
+                            <a href="{{ project.get_absolute_url }}" title="View Details"><i class="fas fa-eye"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">{{ project.category.name }}</span>
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.short_description|truncatewords:15 }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.tech_list|slice:":3" %}
+                                <span>{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No featured projects yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'projects' %}" class="btn-outline-glass">View All Projects <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED BLOG POSTS (DYNAMIC) ==================== -->
+<section class="blog-preview section-padding bg-gradient-dark">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">Latest Insights</span>
+            <h2 class="section-title">From Our <span class="gradient-text">Blog</span></h2>
+            <p class="section-subtitle">Tech tips, tutorials, and industry updates</p>
+        </div>
+        <div class="row g-4">
+            {% for post in featured_posts %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="blog-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    {% else %}
+                        <img src="https://placehold.co/600x400/1e293b/6366f1?text={{ post.title|truncatewords:2|urlencode }}" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="blog-content">
+                        <span class="blog-date">
+                            <i class="far fa-calendar"></i> {{ post.formatted_date }}
+                            <span class="ms-2"><i class="far fa-clock"></i> {{ post.read_time }} min</span>
+                        </span>
+                        <span class="blog-category">{{ post.category }}</span>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt|truncatewords:20 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No blog posts yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'blog' %}" class="btn-outline-glass">View All Posts <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== TESTIMONIALS (DYNAMIC) ==================== -->
+<section class="testimonials section-padding">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">Client Love</span>
+            <h2 class="section-title">What Our <span>Clients Say</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>Digital King transformed our business with their custom CRM. Excellent support!</p>
+                    <h4>— Ahmed Raza</h4>
+                    <span>CEO, TechStart</span>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>The training program helped my team upskill. Highly recommend their courses.</p>
+                    <h4>— Sana Mirza</h4>
+                    <span>IT Director</span>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>Fast delivery, modern designs, and professional team. Will work again!</p>
+                    <h4>— Bilal Khan</h4>
+                    <span>Founder, EcomHub</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA SECTION ==================== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-glass-card" data-aos="zoom-in">
+            <h2>Ready to Start Your Digital Journey?</h2>
+            <p>Get a free consultation or enroll in our next training batch.</p>
+            <a href="{% url 'contact' %}" class="btn-primary-glow btn-large">Contact Us Today <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+    // Typed.js Animation
+    new Typed('#typed-skills-text', {
+        strings: ['Web Development', 'Mobile App Development', 'AI & Machine Learning', 'Cloud Computing', 'Cyber Security', 'IT Training', 'Digital Marketing'],
+        typeSpeed: 80,
+        backSpeed: 50,
+        backDelay: 1500,
+        startDelay: 500,
+        loop: true,
+        showCursor: false
+    });
+
+    // Login Form Validation
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername')?.value.trim();
+            const password = document.getElementById('loginPassword')?.value.trim();
+            const statusDiv = document.getElementById('loginStatus');
+            
+            if (!username || username.length < 3) {
+                statusDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid username (min 3 characters)</div>';
+                return;
+            }
+            if (!password || password.length < 4) {
+                statusDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid password (min 4 characters)</div>';
+                return;
+            }
+            
+            statusDiv.innerHTML = '<div class="alert alert-success">✓ Login successful! Redirecting...</div>';
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+                loginForm.reset();
+            }, 2000);
+        });
+    }
+</script>
+{% endblock %}

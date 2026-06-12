@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Our Services | Digital King</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1 data-aos="fade-up">Our <span class="gradient-text">Services</span></h1>
+        <p data-aos="fade-up" data-aos-delay="100">End-to-end digital solutions for your business</p>
+    </div>
+</section>
+
+<!-- Horizontal Scrolling Marquee -->
+<section class="horizontal-scroll-section">
+    <div class="container-fluid px-0">
+        <div class="scroll-title" data-aos="fade-up">
+            <h3><i class="fas fa-arrow-left"></i> Explore Our Expertise <i class="fas fa-arrow-right"></i></h3>
+        </div>
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                {% for service in services %}
+                <div class="marquee-card"><i class="fas {{ service.icon }}"></i> {{ service.title }}</div>
+                {% empty %}
+                <div class="marquee-card"><i class="fas fa-globe"></i> Web Development</div>
+                <div class="marquee-card"><i class="fas fa-mobile-alt"></i> Mobile Apps</div>
+                <div class="marquee-card"><i class="fas fa-brain"></i> AI & ML</div>
+                <div class="marquee-card"><i class="fas fa-cloud"></i> Cloud Solutions</div>
+                <div class="marquee-card"><i class="fas fa-shield-alt"></i> Cyber Security</div>
+                <div class="marquee-card"><i class="fas fa-chart-line"></i> Digital Marketing</div>
+                {% endfor %}
+                <!-- Duplicate for seamless loop -->
+                {% for service in services %}
+                <div class="marquee-card"><i class="fas {{ service.icon }}"></i> {{ service.title }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid - DYNAMIC FROM DATABASE -->
+<section class="services-full section-padding">
+    <div class="container">
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:0 }}00">
+                <div class="service-card-glass large">
+                    <div class="service-icon"><i class="fas {{ service.icon }}"></i></div>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
+                    {% if service.feature_list %}
+                    <ul>
+                        {% for feature in service.feature_list %}
+                        <li><i class="fas fa-check-circle"></i> {{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static cards if no data -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card-glass large">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Web & App Development</h3>
+                    <p>React, Angular, Vue, Node.js, Laravel, Django – full-stack custom solutions.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> E-commerce</li>
+                        <li><i class="fas fa-check-circle"></i> CMS & Portals</li>
+                        <li><i class="fas fa-check-circle"></i> PWA & SPA</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card-glass large">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Solutions</h3>
+                    <p>Native & cross-platform iOS/Android apps with modern UI/UX.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Flutter & React Native</li>
+                        <li><i class="fas fa-check-circle"></i> Swift & Kotlin</li>
+                        <li><i class="fas fa-check-circle"></i> App Store Deployment</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card-glass large">
+                    <div class="service-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>AWS, Azure, GCP, Docker, Kubernetes, CI/CD pipelines.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Cloud Migration</li>
+                        <li><i class="fas fa-check-circle"></i> Infrastructure as Code</li>
+                        <li><i class="fas fa-check-circle"></i> 24/7 Monitoring</li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

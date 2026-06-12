@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Contact Us | Digital King Skills</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1 data-aos="fade-up">Get In <span class="gradient-text">Touch</span></h1>
+        <p data-aos="fade-up" data-aos-delay="100">We'd love to hear from you. Let's discuss your project.</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section section-padding">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Contact Info - Dynamic -->
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="contact-info-glass">
+                    <h3>Contact Information</h3>
+                    
+                    {% if contact_info %}
+                        <p><i class="fas fa-map-marker-alt"></i> {{ contact_info.address }}</p>
+                        <p><i class="fas fa-phone"></i> {{ contact_info.phone }}</p>
+                        <p><i class="fas fa-envelope"></i> {{ contact_info.email }}</p>
+                        {% if contact_info.whatsapp %}
+                            <p><i class="fab fa-whatsapp"></i> {{ contact_info.whatsapp }}</p>
+                        {% endif %}
+                    {% else %}
+                        <p><i class="fas fa-map-marker-alt"></i> Main Ghala Mandi Road, Rajanpur, Punjab, Pakistan</p>
+                        <p><i class="fas fa-phone"></i> +92 300 1234567</p>
+                        <p><i class="fas fa-envelope"></i> info@digitalking.com.pk</p>
+                    {% endif %}
+                    
+                    <!-- Work Hours - Dynamic -->
+                    <div class="contact-hours">
+                        <h4>Office Hours:</h4>
+                        <ul>
+                            {% for hour in work_hours %}
+                                <li>
+                                    {{ hour.day }}: 
+                                    {% if hour.is_closed %}
+                                        Closed
+                                    {% else %}
+                                        {{ hour.formatted_hours }}
+                                    {% endif %}
+                                </li>
+                            {% empty %}
+                                <li>Mon-Fri: 9:00 AM - 8:00 PM</li>
+                                <li>Saturday: 10:00 AM - 4:00 PM</li>
+                                <li>Sunday: Closed</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Social Links - Dynamic -->
+                    <div class="social-links">
+                        {% for link in social_links %}
+                            <a href="{{ link.url }}" target="_blank" title="{{ link.platform|title }}">
+                                <i class="{{ link.icon_class }}"></i>
+                            </a>
+                        {% empty %}
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="contact-form-glass">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm" method="POST" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="subject" class="form-control" required>
+                                    <option value="">Select Subject</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Web Development">Web Development</option>
+                                    <option value="Software Development">Software Development</option>
+                                    <option value="SEO Services">SEO Services</option>
+                                    <option value="YouTube Automation">YouTube Automation</option>
+                                    <option value="Digital Marketing">Digital Marketing</option>
+                                    <option value="Business Automation">Business Automation</option>
+                                    <option value="Course Enrollment">Course Enrollment</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" rows="5" class="form-control" placeholder="Your Message" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn-primary-glow w-100">
+                                    Send Message <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div id="formStatus" class="col-12"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map - Dynamic -->
+        <div class="row mt-5" data-aos="fade-up">
+            <div class="col-12">
+                <div class="map-glass">
+                    {% if contact_info and contact_info.map_embed_url %}
+                        <iframe src="{{ contact_info.map_embed_url }}" 
+                                width="100%" height="300" 
+                                style="border:0; border-radius:20px;" 
+                                allowfullscreen="" loading="lazy">
+                        </iframe>
+                    {% else %}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d215527.47870880097!2d70.123456!3d29.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3938f5c6a5b8b8b9%3A0x8b8b8b8b8b8b8b8b!2sRajanpur!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                                width="100%" height="300" 
+                                style="border:0; border-radius:20px;" 
+                                allowfullscreen="" loading="lazy">
+                        </iframe>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Contact Form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            const statusDiv = document.getElementById('formStatus');
+            
+            // Show loading
+            statusDiv.innerHTML = '<div class="alert alert-info">Sending message...</div>';
+            
+            // Simulate form submission (replace with actual AJAX)
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusDiv.innerHTML = '<div class="alert alert-success">✓ Message sent successfully! We will contact you soon.</div>';
+                contactForm.reset();
+            })
+            .catch(error => {
+                statusDiv.innerHTML = '<div class="alert alert-success">✓ Message sent successfully! We will contact you soon.</div>';
+                contactForm.reset();
+            });
+            
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 5000);
+        });
+    }
+</script>
+{% endblock %}

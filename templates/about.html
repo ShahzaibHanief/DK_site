@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>About Us | Digital King Skills</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <h1 data-aos="fade-up">
+            {% if about %}{{ about.title|default:"About" }}{% else %}About{% endif %} 
+            <span class="gradient-text">Digital King</span>
+        </h1>
+        <p data-aos="fade-up" data-aos-delay="100">
+            {% if about %}{{ about.subtitle|default:"Innovative IT solutions" }}{% else %}Innovative IT solutions & training hub in Rajanpur{% endif %}
+        </p>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="about-story section-padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <span class="section-badge">Our Story</span>
+                <h2 class="section-title">
+                    {% if about %}{{ about.story_title|default:"5+ Years of Digital Excellence" }}{% else %}5+ Years of <span class="gradient-text">Digital Excellence</span>{% endif %}
+                </h2>
+                <p>
+                    {% if about %}{{ about.story_paragraph_1 }}{% else %}Founded in 2018, Digital King Software House started as a small team of passionate developers. Today, we're Rajanpur's most trusted IT partner with 150+ successful projects and 25+ expert team members.{% endif %}
+                </p>
+                <p>
+                    {% if about %}{{ about.story_paragraph_2 }}{% else %}We blend creativity with cutting-edge technology to deliver solutions that drive real business growth. Our training division has empowered 500+ students with industry-ready skills.{% endif %}
+                </p>
+                
+                <!-- Achievements Grid -->
+                <div class="achievement-grid row mt-4">
+                    {% for achievement in achievements %}
+                    <div class="col-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                        <i class="fas {{ achievement.icon }}"></i> {{ achievement.text }}
+                    </div>
+                    {% empty %}
+                    <div class="col-6"><i class="fas fa-trophy"></i> Best IT Award 2023</div>
+                    <div class="col-6"><i class="fas fa-users"></i> 500+ Trained</div>
+                    <div class="col-6"><i class="fas fa-globe"></i> 50+ Global Clients</div>
+                    <div class="col-6"><i class="fas fa-star"></i> 4.9 Rating</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="about-image-glass">
+                    {% if about and about.image %}
+                        <img src="{{ about.image.url }}" alt="Team Digital King">
+                    {% else %}
+                        <img src="https://placehold.co/600x400/1e293b/6366f1?text=Team+Digital+King" alt="Team">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="mission-vision section-padding bg-gradient-dark">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-right">
+                <div class="mission-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>{% if about %}{{ about.mission_title|default:"Our Mission" }}{% else %}Our Mission{% endif %}</h3>
+                    <p>
+                        {% if about %}{{ about.mission_text }}{% else %}Empower businesses and individuals through innovative technology solutions and world-class IT training, bridging the digital divide in Rajanpur and beyond.{% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="vision-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>{% if about %}{{ about.vision_title|default:"Our Vision" }}{% else %}Our Vision{% endif %}</h3>
+                    <p>
+                        {% if about %}{{ about.vision_text }}{% else %}To become Pakistan's leading software house known for quality, innovation, and transforming passionate learners into industry-ready professionals.{% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section section-padding">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">Leadership</span>
+            <h2 class="section-title">Meet Our <span class="gradient-text">Experts</span></h2>
+        </div>
+        <div class="row g-4">
+            {% for member in team_members %}
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="{{ forloop.counter }}00">
+                <div class="team-card">
+                    {% if member.image %}
+                        <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                    {% else %}
+                        <img src="https://placehold.co/300x300/1e293b/6366f1?text={{ member.name|urlencode }}" alt="{{ member.name }}">
+                    {% endif %}
+                    <h3>{{ member.name }}</h3>
+                    <p>{{ member.role }}</p>
+                    <div class="team-social">
+                        {% if member.linkedin %}
+                            <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if member.twitter %}
+                            <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static team members -->
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                <div class="team-card">
+                    <img src="https://placehold.co/300x300/1e293b/6366f1?text=CEO" alt="CEO">
+                    <h3>Ali Hamza</h3>
+                    <p>Founder & CEO</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="team-card">
+                    <img src="https://placehold.co/300x300/1e293b/a855f7?text=CTO" alt="CTO">
+                    <h3>Fatima Zafar</h3>
+                    <p>CTO</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="300">
+                <div class="team-card">
+                    <img src="https://placehold.co/300x300/1e293b/ec4899?text=Training+Head" alt="Training Head">
+                    <h3>Usman Chaudhry</h3>
+                    <p>Head of Training</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

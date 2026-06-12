@@ -1,0 +1,211 @@
+
+        /* Login Form Styles */
+        .login-card {
+            background: var(--teal-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            transition: var(--transition);
+        }
+        .login-card h3 {
+            color: var(--text-white);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .login-card .form-control {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            color: var(--text-dark-navy);
+        }
+        .login-card .form-control:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 3px rgba(245,166,35,0.2);
+        }
+        .login-btn {
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            width: 100%;
+            font-weight: 700;
+            color: var(--text-dark-navy);
+            transition: var(--transition);
+        }
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(245,166,35,0.4);
+        }
+        .forgot-password {
+            text-align: center;
+            margin-top: 12px;
+        }
+        .forgot-password a {
+            color: var(--gold-primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .forgot-password a:hover {
+            color: var(--gold-light);
+        }
+        
+        /* Animated Title Styles */
+        .animated-brand-title {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .animated-brand-title h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .animated-brand-title .typing-text {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            min-height: 80px;
+        }
+        .animated-brand-title .cursor {
+            display: inline-block;
+            width: 3px;
+            margin-left: 5px;
+            background: var(--gold-primary);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Contact Images Section */
+        .contact-images-section {
+            margin-top: 30px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .contact-img-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--teal-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            padding: 8px 20px 8px 15px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .contact-img-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 10px 25px rgba(245,166,35,0.2);
+        }
+        .contact-img-card img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .contact-img-card .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-img-card .contact-label {
+            font-size: 0.7rem;
+            color: var(--text-light-gray);
+        }
+        .contact-img-card .contact-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+        .contact-img-card .contact-number:hover {
+            color: var(--gold-light);
+        }
+        
+        /* Animated Background for Training Section */
+        .animated-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://placehold.co/1920x1080/083C52/F5A623?text=Tech+Background') center/cover;
+            opacity: 0.1;
+            animation: zoomBackground 20s ease-in-out infinite;
+            z-index: 0;
+        }
+        @keyframes zoomBackground {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .animated-bg .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Left to Right Moving Text Animation */
+        .moving-text-container {
+            overflow: hidden;
+            white-space: nowrap;
+            background: linear-gradient(90deg, transparent, rgba(245,166,35,0.1), transparent);
+            padding: 15px 0;
+            margin-bottom: 50px;
+        }
+        .moving-text {
+            display: inline-block;
+            animation: moveLeftToRight 20s linear infinite;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: transparent;
+            background: var(--gold-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+        .moving-text span {
+            margin: 0 30px;
+        }
+        .moving-text i {
+            color: var(--gold-primary);
+            margin: 0 20px;
+        }
+        @keyframes moveLeftToRight {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Logo Image Style */
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+        
+        @media (max-width: 992px) {
+            .moving-text { font-size: 1.2rem; }
+            .login-card { margin-top: 30px; }
+            .animated-brand-title h1 { font-size: 2rem; }
+            .animated-brand-title .typing-text { font-size: 1.3rem; }
+            .contact-images-section { flex-wrap: wrap; justify-content: center; }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-stats { text-align: center; }
+            .animated-brand-title { text-align: center; }
+            .contact-images-section { justify-content: center; }
+        }
+   
