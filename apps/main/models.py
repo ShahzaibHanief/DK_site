@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+import uuid
 
 
 
@@ -193,12 +194,13 @@ class Course(models.Model):
         ('Daily', 'Daily'),
         ('Flexible', 'Flexible'),
     ]
-    
+   
     title = models.CharField(max_length=100)
     icon = models.CharField(max_length=50,choices=ICON_CHOICES, default='fa-code')
     duration = models.CharField(max_length=50, help_text="e.g., 12 Weeks")
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='Beginner')
     schedule = models.CharField(max_length=20, choices=SCHEDULE_CHOICES, default='Weekends')
+    slug = models.SlugField(unique=True,blank=True,null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Open')
     short_description = models.TextField(help_text="Short text for card")
     full_description = models.TextField(help_text="Full details for detail page")
@@ -222,8 +224,22 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title} ({self.duration})"
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            # Check if slug exists, if yes add number
+            while Course.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+
     def get_absolute_url(self):
-        return reverse('course_detail', kwargs={'pk': self.pk})
+        return reverse('course_detail', kwargs={'slug': self.slug})
     
     @property
     def syllabus_list(self):
@@ -331,6 +347,7 @@ class Project(models.Model):
     """Portfolio projects"""
     title = models.CharField(max_length=100)
     category = models.ForeignKey(ProjectCategory, on_delete=models.CASCADE, related_name='projects')
+    slug = models.SlugField(unique=True,null=True,blank=True)
     description = models.TextField()
     short_description = models.TextField(help_text="Short text for card view")
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
@@ -350,8 +367,22 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            # Check if slug exists, if yes add number
+            while Course.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+    
     def get_absolute_url(self):
-        return reverse('project_detail', kwargs={'pk': self.pk})
+        return reverse('project_detail', kwargs={'slug': self.slug})
     
     @property
     def tech_list(self):
@@ -422,3 +453,42 @@ class BlogPost(models.Model):
     @property
     def formatted_date(self):
         return self.published_date.strftime('%b %d, %Y')
+    
+
+
+
+class Subject(models.Model):
+    title = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Subject"
+        verbose_name_plural = "Subjects"
+        ordering = ['title']
+    
+    def __str__(self):
+        return self.title
+
+
+class ContactForm(models.Model):
+    name = models.CharField(max_length=300)
+    email = models.EmailField()
+    contact = models.CharField(max_length=20)
+    
+    # ✅ ForeignKey - Admin se subjects set honge
+    subject = models.ForeignKey(
+        Subject,
+        on_delete=models.SET_NULL,  # Subject delete ho to null ho jaye
+        null=True,
+        blank=True,
+        related_name='contacts'
+    )
+    
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.name} - {self.subject}"

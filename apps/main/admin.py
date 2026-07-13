@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     WorkHour, About, Achievement, TeamMember, 
     Service, Course, ContactInfo, SocialLink,
-    ProjectCategory, Project, SiteStat,BlogPost
+    ProjectCategory, Project, SiteStat,BlogPost,Subject, ContactForm
 )
 # Register your models here.
 @admin.register(WorkHour)
@@ -43,7 +43,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'duration', 'level', 'schedule', 'status', 'fee', 'order', 'is_active', 'show_on_home']
+    list_display = ['title', 'duration','slug', 'level', 'schedule', 'status', 'fee', 'order', 'is_active', 'show_on_home']
     list_editable = ['order', 'is_active', 'show_on_home', 'status']
     list_filter = ['level', 'status', 'is_active', 'show_on_home']
     search_fields = ['title', 'short_description']
@@ -120,3 +120,21 @@ class BlogPostAdmin(admin.ModelAdmin):
             'fields': ('is_featured', 'is_active')
         }),
     )
+
+
+ 
+
+@admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ['title', 'is_active', 'id']
+    list_filter = ['is_active']
+    search_fields = ['title']
+    list_editable = ['is_active']
+
+
+@admin.register(ContactForm)
+class ContactFormAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'subject', 'contact', 'created_at']
+    list_filter = ['subject', 'created_at']
+    search_fields = ['name', 'email', 'message']
+    readonly_fields = ['created_at']

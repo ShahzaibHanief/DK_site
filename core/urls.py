@@ -15,14 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include,re_path
 from . import views
 from django.conf import settings          
 from django.conf.urls.static import static 
+from django.views.static import serve
+from django.views.decorators.cache import never_cache
+
+
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', never_cache(admin.site.urls)),
     # path('', views.home, name='home'),
     path('', include('apps.main.urls')),
 ]
@@ -30,3 +34,23 @@ urlpatterns = [
 # YE SABSE IMPORTANT HAI — Development mein media serve karna
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+
+
+# ✅ MEDIA FILES - Local + Ngrok dono par kaam karega
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
+
+# ✅ STATIC FILES - Local + Ngrok dono par kaam karega
+urlpatterns += [
+    re_path(r'^static/(?P<path>.*)$', serve, {
+        'document_root': settings.STATIC_ROOT,
+    }),
+]

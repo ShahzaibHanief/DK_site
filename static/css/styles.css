@@ -825,11 +825,85 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-dark-navy);
 }
 
-.about-image-glass img {
+/* ========== ABOUT IMAGE FIX - RESPONSIVE ========== */
+/* ========== ABOUT IMAGE FIX - RESPONSIVE ========== */
+.about-image-glass {
+    width: 100%;
+    max-width: 100%;
     border-radius: 24px;
+    overflow: hidden;
     border: 2px solid var(--gold-primary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(245,166,35,0.1);
+    
+    /* ✅ GAP FIX: Remove any inline spacing */
+    display: block;
+    line-height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
 }
 
+.about-image-glass img {
+    width: 100%;
+    display: block;
+    /* ✅ CRITICAL: Remove default inline spacing */
+    vertical-align: top;
+    transition: transform 0.4s ease;
+}
+
+.about-image-glass:hover img {
+    transform: scale(1.05);
+}
+
+/* ✅ LAPTOP/Desktop: Natural height */
+@media (min-width: 992px) {
+    .about-image-glass img {
+        height: auto;
+    }
+}
+
+/* ✅ TABLET & MOBILE: Border + Shadow + Image fills container */
+@media (max-width: 991px) {
+    .about-image-glass {
+        margin-top: 30px;
+        /* ✅ Border + Shadow same as desktop */
+        border: 2px solid var(--gold-primary);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(245,166,35,0.1);
+        
+        /* ✅ FIXED HEIGHT so image fills completely */
+        height: 350px;
+    }
+    
+    .about-image-glass img {
+        /* ✅ CRITICAL: Image fills entire container */
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        /* ❌ REMOVE: max-height: 350px (ye gap create karta hai) */
+    }
+}
+
+/* ✅ MOBILE */
+@media (max-width: 768px) {
+    .about-image-glass {
+        height: 280px;
+        border-radius: 20px;
+    }
+    .about-image-glass img {
+        border-radius: 20px;
+    }
+}
+
+/* ✅ SMALL MOBILE */
+@media (max-width: 576px) {
+    .about-image-glass {
+        height: 220px;
+        border-radius: 16px;
+    }
+    .about-image-glass img {
+        border-radius: 16px;
+    }
+}
 /* ========== CONTACT PAGE SPECIFIC ========== */
 .contact-info-glass, .contact-form-glass {
     background: var(--teal-glass);
@@ -948,6 +1022,44 @@ textarea.form-control {
     .section-title { font-size: 1.8rem; }
     .marquee-card { padding: 10px 20px; font-size: 0.8rem; }
     .nav-link { color: var(--text-white) !important; }
+    
+    /* ✅ About image mobile fix */
+    .about-image-glass {
+        margin-top: 30px;
+    }
+    
+    .about-image-glass img {
+        max-height: 480px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        max-width: calc(100% - 70px);
+    }
+    
+    .brand-text {
+        font-size: 0.95rem;
+    }
+    
+    .logo-img {
+        height: 30px !important;
+        border-radius: 8px !important;
+    }
+    
+    .navbar-toggler {
+        padding: 6px 10px;
+    }
+    
+    .page-hero {
+        padding-top: 120px !important;
+    }
+    
+    .page-hero h1 {
+        font-size: 2rem;
+    }
+    
+    
 }
 
 /* ========== UTILITY CLASSES ========== */
@@ -986,46 +1098,6 @@ textarea.form-control {
     color: #f44336;
 }
 
-
-
-/* ========== ABOUT IMAGE FIX ========== */
-.about-image-glass {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-    border: 2px solid var(--gold-primary);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(245,166,35,0.1);
-}
-
-.about-image-glass img {
-    width: 100%;
-    height: 400px;              /* fixed height - bada karo */
-    object-fit: cover;          /* crop karke fill */
-    object-position: center;    /* center se crop */
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-.about-image-glass:hover img {
-    transform: scale(1.05);    /* hover pe zoom */
-}
-
-/* Responsive */
-@media (max-width: 991px) {
-    .about-image-glass img {
-        height: 350px;
-        margin-top: 30px;
-    }
-}
-
-@media (max-width: 576px) {
-    .about-image-glass img {
-        height: 250px;
-    }
-}
-
-
 /* Course Actions */
 .course-actions {
     display: flex;
@@ -1057,8 +1129,6 @@ textarea.form-control {
     border-color: var(--gold-primary);
     box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(245,166,35,0.2);
 }
-
-
 
 /* ========== BLOG CARDS ========== */
 .blog-card {
@@ -1156,3 +1226,143 @@ textarea.form-control {
     }
 }
 
+/* toggle button responsive */
+/* ========== INNER PAGES NAVBAR FIX ========== */
+
+/* About, Training, Contact pages ke liye special handling */
+body:not(.home-page) .navbar {
+    background: var(--teal-dark) !important;
+}
+
+/* Mobile toggle button fix - sab pages pe */
+.navbar-toggler {
+    border: 1px solid var(--gold-primary) !important;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(245, 166, 35, 0.1);
+    margin-right: 15px;
+    order: 3;  /* ← Right side pe lao */
+}
+
+/* Toggle icon color */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28245, 166, 35, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ========== MOBILE MENU FIX ========== */
+@media (max-width: 991px) {
+    /* Navbar container */
+    .navbar > .container {
+        flex-wrap: wrap;
+        padding: 0 15px;
+    }
+    
+    /* Brand/logo fix */
+    .navbar-brand {
+        max-width: calc(100% - 80px);  /* Toggle button ke liye space */
+        margin-right: 0;
+        padding: 0;
+    }
+    
+    /* Logo text chhota karo */
+    .brand-text {
+        font-size: 1.1rem;
+    }
+    
+    .logo-img {
+        height: 35px !important;
+    }
+    
+    /* Toggle button position */
+    .navbar-toggler {
+        margin-left: auto;  /* ← Right side pe */
+        margin-right: 0;
+    }
+    
+    /* Collapse menu - proper styling */
+    .navbar-collapse {
+        background: var(--teal-dark);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 15px;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        
+        /* Scroll fix */
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    
+    /* Nav links */
+    .nav-link {
+        padding: 12px 15px !important;
+        margin: 5px 0 !important;
+        border-radius: 10px;
+        color: var(--text-white) !important;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(245, 166, 35, 0.15) !important;
+        color: var(--gold-primary) !important;
+    }
+    
+    /* CTA button */
+    .btn-glow {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        width: 100%;
+    }
+    
+    /* Page hero padding fix - IMPORTANT! */
+    .page-hero {
+        padding-top: 100px !important;  /* ← Navbar height ke hisaab se */
+        padding-bottom: 60px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 576px) {
+    .navbar-brand {
+        max-width: calc(100% - 70px);
+    }
+    
+    .brand-text {
+        font-size: 0.95rem;
+    }
+    
+    .logo-img {
+        height: 30px !important;
+        border-radius: 8px !important;
+    }
+    
+    .navbar-toggler {
+        padding: 6px 10px;
+    }
+    
+    .page-hero {
+        padding-top: 120px !important;
+    }
+    
+    .page-hero h1 {
+        font-size: 2rem;
+    }
+}
+
+/* ========== SCROLLED NAVBAR FIX ========== */
+.navbar.scrolled {
+    background: var(--teal-dark) !important;
+    backdrop-filter: blur(12px);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* Inner pages mein hamesha scrolled look */
+body:not(.home-page) .navbar {
+    background: var(--teal-dark) !important;
+    border-bottom: 1px solid var(--glass-border);
+}

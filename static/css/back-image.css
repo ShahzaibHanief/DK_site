@@ -1,8 +1,8 @@
-{% load static %}
+
 
 /* Simple Background Images - No Overlay */
 .hero-section {
-    background-image: url('../images/image.png');
+    background-image: url('../images/image.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

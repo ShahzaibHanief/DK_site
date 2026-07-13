@@ -6,10 +6,10 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
     path('training/', views.training, name='training'),
-    path('training/<int:pk>/', views.course_detail, name='course_detail'),
+    path('training/<slug:slug>/', views.course_detail, name='course_detail'),
 
     path('projects/', views.projects, name='projects'),
-    path('projects/<int:pk>/', views.project_detail, name='project_detail'),
+    path('projects/<slug:slug>/', views.project_detail, name='project_detail'),
 
     path('contact/', views.contact, name='contact'),
 
